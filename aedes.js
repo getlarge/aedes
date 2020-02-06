@@ -11,7 +11,6 @@ var Packet = require('aedes-packet')
 var bulk = require('bulk-write-stream')
 var reusify = require('reusify')
 var Client = require('./lib/client')
-var protocolDecoder = require('./lib/protocol-decoder')
 
 module.exports = Aedes
 Aedes.Server = Aedes
@@ -306,8 +305,7 @@ Aedes.prototype.close = function (cb = noop) {
 Aedes.prototype.version = require('./package.json').version
 
 function defaultDecodeProtocol (client, buffer) {
-  var proto = protocolDecoder(client, buffer)
-  return proto
+  return null
 }
 
 function defaultPreConnect (client, callback) {

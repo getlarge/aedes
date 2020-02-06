@@ -98,6 +98,7 @@ httpServer.listen(wsPort, function () {
   * <a href="#subscribe"><code>instance.<b>subscribe()</b></code></a>
   * <a href="#publish"><code>instance.<b>publish()</b></code></a>
   * <a href="#unsubscribe"><code>instance.<b>unsubscribe()</b></code></a>
+  * <a href="#decodeProtocol"><code>instance.<b>decodeProtocol()</b></code></a>
   * <a href="#preConnect"><code>instance.<b>preConnect()</b></code></a>
   * <a href="#authenticate"><code>instance.<b>authenticate()</b></code></a>
   * <a href="#authorizePublish"><code>instance.<b>authorizePublish()</b></code></a>
@@ -136,7 +137,7 @@ Options:
   packet to arrive, defaults to `30000` milliseconds
 * `id`: id used to identify this broker instance in `$SYS` messages,
   defaults to `uuidv4()`
-* `decodeProtocol`: function called when a valid buffer is received, see
+* `decodeProtocol`: function called when the first valid buffer is received, see
   [instance.decodeProtocol()](#decodeProtocol)
 * `preConnect`: function called when a valid CONNECT is received, see
   [instance.preConnect()](#preConnect)
@@ -252,7 +253,7 @@ The reverse of [subscribe](#subscribe).
 <a name="decodeProtocol"></a>
 ### instance.decodeProtocol(client, buffer)
 
-It will be called when aedes instance trustProxy is true and that it receives a first valid buffer from client. client object state is in default and its connected state is false. A default function parse https headers (x-real-ip | x-forwarded-for) and proxy protocol v1 and v2 to retrieve information in client.connDetails. Override to supply custom protocolDecoder logic, if it returns an object with data property, this property will be parsed as an mqtt-packet.
+It will be called when aedes instance receives a first valid buffer from client (before CONNECT packet). Override to supply custom protocolDecoder logic, if it returns an object with data property, this property will be parsed as an mqtt-packet.
 
 
 ```js

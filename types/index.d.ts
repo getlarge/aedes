@@ -38,6 +38,8 @@ declare namespace aedes {
     close (callback?: () => void): void
   }
 
+  export type DecodeProtocol = (client: Client, buffer: Buffer) => Object | null
+
   export type PreConnectCallback = (client: Client, done: (err: Error | null, success: boolean) => void) => void
 
   export type AuthenticateError = Error & { returnCode: AuthErrorCode }
@@ -63,6 +65,7 @@ declare namespace aedes {
     concurrency?: number
     heartbeatInterval?: number
     connectTimeout?: number
+    decodeProtocol?: DecodeProtocol
     preConnect?: PreConnectCallback
     authenticate?: AuthenticateCallback
     authorizePublish?: AuthorizePublishCallback
@@ -75,6 +78,7 @@ declare namespace aedes {
   export interface Aedes extends EventEmitter {
     handle: (stream: Duplex) => void
 
+    decodeProtocol?: DecodeProtocol
     preConnect: PreConnectCallback
     authenticate: AuthenticateCallback
     authorizePublish: AuthorizePublishCallback
